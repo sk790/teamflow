@@ -13,7 +13,7 @@ const OrgList = () => {
   return (
     <ul className="space-y-1">
       {userMemberships.data?.map((member) => (
-        <OrgItems key={member.organization.id} {...member.organization}/>
+        <OrgItems key={member.organization.id} {...member.organization} />
       ))}
     </ul>
   );

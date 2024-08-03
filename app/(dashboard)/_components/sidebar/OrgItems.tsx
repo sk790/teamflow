@@ -1,5 +1,6 @@
 "use client";
 
+import { Hint } from "@/components/Hint";
 import { cn } from "@/lib/utils";
 import { useOrganization, useOrganizationList } from "@clerk/nextjs";
 import Image from "next/image";
@@ -23,6 +24,7 @@ function OrgItems({ name, id, imageUrl }: itemProps) {
 
   return (
     <div className="aspect-square relative">
+      <Hint label={name} side="left">
       <Image
         fill
         src={imageUrl}
@@ -33,6 +35,7 @@ function OrgItems({ name, id, imageUrl }: itemProps) {
           isActive && "opacity-100"
         )}
       />
+      </Hint>
     </div>
   );
 }
