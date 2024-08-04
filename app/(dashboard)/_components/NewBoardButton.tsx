@@ -1,0 +1,46 @@
+import { api } from "@/convex/_generated/api";
+import { useApiMutation } from "@/hooks/useApiMutation";
+import { cn } from "@/lib/utils";
+import { useMutation } from "convex/react";
+import { Plus } from "lucide-react";
+import React from "react";
+import { ImSpinner2 } from "react-icons/im";
+import { toast } from "sonner";
+
+function NewBoardButton({
+  orgId,
+  disabled,
+}: {
+  orgId: string;
+  disabled?: boolean;
+}) {
+  const { mutate, pending } = useApiMutation(api.board.create);
+
+  const onClick = () => {
+    mutate({
+      orgId,
+      title: "SAurabh",
+    }).then(() => toast.success("Board created"))
+    .catch((err) => toast.error("Failed to create board"));
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "col-span-1 aspect-[100/127] bg-blue-500 rounded-lg flex flex-col justify-center items-center py-6",
+        (pending || disabled) && "opacity-50 transition-opacity"
+      )}
+    >
+      <div />
+      {pending ? (
+        <ImSpinner2 className="animate-spin w-8 h-8 text-white" />
+      ) : (
+        <Plus className="animate-spin w-8 h-8 text-white" />
+      )}
+      <p className="text-sm text-white font-light">Create New Board</p>
+    </button>
+  );
+}
+
+export default NewBoardButton;
