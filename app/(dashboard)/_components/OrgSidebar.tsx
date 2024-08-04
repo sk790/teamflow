@@ -5,9 +5,13 @@ import { OrganizationSwitcher } from "@clerk/nextjs";
 import { LayoutDashboard, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 function OrgSidebar() {
+
+  const searchParams = useSearchParams();
+  const favorite = searchParams.get("favorite")
   return (
     <div className="hidden lg:flex flex-col space-y-6 w-[206px] pl-5 pt-5 ">
       <Link href={"/"}>
@@ -42,13 +46,13 @@ function OrgSidebar() {
         }}
       />
       <div className="space-y-2 w-full">
-        <Button className="justify-start px-2 w-full" variant={"ghost"} asChild>
+        <Button className="justify-start px-2 w-full" variant={favorite?"ghost":"secondary"} asChild>
           <Link href={"/"}>
             <LayoutDashboard className="w-4 h-4 mr-2" />
             Team Dashboards
           </Link>
         </Button>
-        <Button className="justify-start px-2 w-full" variant={"ghost"} asChild>
+        <Button className="justify-start px-2 w-full" variant={favorite?"secondary":"ghost"} asChild>
           <Link href={{
             pathname: "/",
             query: {
