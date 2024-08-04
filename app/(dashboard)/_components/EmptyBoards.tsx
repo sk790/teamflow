@@ -6,6 +6,8 @@ import { useApiMutation } from "@/hooks/useApiMutation";
 import { useOrganization } from "@clerk/nextjs";
 import Image from "next/image";
 import React from "react";
+import { ImSpinner, ImSpinner2 } from "react-icons/im";
+import { toast } from "sonner";
 
 
 function EmptyBoards() {
@@ -17,6 +19,12 @@ function EmptyBoards() {
     mutate({
       orgId: organization.id,
       title: "New Board",
+    })
+    .then(()=>{
+      toast.success("Board created")
+    })
+    .catch((err)=>{
+      toast.error("Failed to create board")
     })
   }
 
@@ -32,7 +40,9 @@ function EmptyBoards() {
       <h2 className="font-semibold mt-4 text-2xl">Create your first board</h2>
       <p className="text-muted-foreground mt-2 text-sm"> Start by creating a new board for your team</p>
       <div className="mt-6">
-        <Button disabled={pending} onClick={onClick} size={"lg"}>Create Board</Button>
+        <Button disabled={pending} onClick={onClick} size={"lg"}>
+          {pending ?<ImSpinner2 className="animate-spin"/>:"Create Board"}
+        </Button>
       </div>
     </div>
   );

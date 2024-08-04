@@ -9,7 +9,7 @@ export default defineSchema({
     authorName: v.string(),
     imageUrl: v.string(),
   })
-    .index("by_org", ["orgId"])
+    .index("by_org", ["orgId"])     //when we get boards get by org
     .searchIndex("search_title", {
       searchField: "title",
       filterFields: ["orgId"],

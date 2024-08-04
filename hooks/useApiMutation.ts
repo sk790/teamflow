@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export const useApiMutation = (mutationFunction: any) => {
   const [pending, setPending] = useState(false);
-  const apiMutation = useMutatio(mutationFunction);
+  const apiMutation = useMutation(mutationFunction);
 
   const mutate = (payload: any) => {
     setPending(true);
