@@ -8,6 +8,8 @@ import { useAuth } from "@clerk/nextjs";
 import { formatDistanceToNow } from "date-fns";
 import Footer from "./Footer";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Actions } from "@/components/actions";
+import { MoreHorizontal } from "lucide-react";
 
 interface Props {
   id: string;
@@ -41,6 +43,16 @@ function BoardCard({
         <div className="relative flex-1 bg-amber-50">
           <Image src={imageUr} alt={title} fill className="object-fit" />
           <OverLay />
+          <Actions 
+            id={id}
+            side="right"
+            sideOffset={10}
+            title={title}
+          >
+            <button className="absolute top-1 right-1 z-50">
+              <MoreHorizontal className="text-white opacity-75 hover:opacity-100"/>
+            </button>
+          </Actions>
         </div>
         <Footer
           isFavorite={isFavorite}
