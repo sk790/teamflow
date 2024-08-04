@@ -45,8 +45,8 @@ function BoardCard({
           <OverLay />
           <Actions 
             id={id}
-            side="right"
-            sideOffset={10}
+            side="left"
+            sideOffset={5}
             title={title}
           >
             <button className="absolute top-1 right-1 z-50 outline-none">
