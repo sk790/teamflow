@@ -9,7 +9,7 @@ export const create = mutation({
     orgId: v.string(),
     title: v.string(),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args) => {    
     const user = await ctx.auth.getUserIdentity();
     if (!user) {
       throw new Error("Unauthorized");
@@ -49,15 +49,16 @@ export const updateBoard = mutation({
     title: v.string(),
   },
   handler: async (ctx, args) => {
+    console.log(args.title,"saurabh");
     const user = await ctx.auth.getUserIdentity();
     if (!user) {
       throw new Error("Unauthorized");
     }
-    const tittle = args.title.trim();
-    if (!tittle) {
+    const title = args.title.trim();
+    if (!title) {
       throw new Error("Title cannot be empty");
     }
-    if (tittle.length > 50 || tittle.length < 2) {
+    if (title.length > 50 || title.length < 2) {
       throw new Error(
         "Title cannot be longer than 50 characters or shorter than 2"
       );

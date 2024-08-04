@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Link2, Trash2 } from "lucide-react";
+import { Link2, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { api } from "@/convex/_generated/api";
@@ -15,6 +15,7 @@ import { ImSpinner2 } from "react-icons/im";
 import ConfirmModel from "./ConfirmModel";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { useRenameModel } from "@/store/useRenameModel";
 
 interface ActionsProps {
   children: React.ReactNode;
@@ -42,6 +43,8 @@ export const Actions = ({
       });
   };
 
+  const { onOpen } = useRenameModel();
+
   const { mutate, pending } = useApiMutation(api.board.deleteBoard);
 
   const deleteBoard = () => {
@@ -67,6 +70,13 @@ export const Actions = ({
         <DropdownMenuItem className="p-3 cursor-pointer" onClick={copyLink}>
           <Link2 className="w-4 h-4 mr-1" />
           Copy Board Link
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="p-3 cursor-pointer"
+          onClick={() => onOpen(id, title)}
+        >
+          <Pencil className="w-4 h-4 mr-1" />
+          Rename
         </DropdownMenuItem>
         <ConfirmModel
           header={"Delete Board"}

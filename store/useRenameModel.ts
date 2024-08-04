@@ -1,21 +1,21 @@
 import { create } from "zustand";
 const defaultValues = {
   id: "",
-  tittle: "",
+  title: "",
 };
 interface IRenameModel {
   isOpen: boolean;
   initialValues: typeof defaultValues;
-  onOpen: (id: string, tittle: string) => void;
+  onOpen: (id: string, title: string) => void;
   onClose: () => void;
 }
 
 export const useRenameModel = create<IRenameModel>((set) => ({
   isOpen: false,
-  onOpen: (id, tittle) =>
+  onOpen: (id, title) =>
     set({
       isOpen: true,
-      initialValues: { id, tittle },
+      initialValues: { id, title },
     }),
   onClose: () => set({ isOpen: false, initialValues: defaultValues }),
   initialValues: defaultValues,

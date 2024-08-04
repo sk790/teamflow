@@ -16,10 +16,10 @@ function NewBoardButton({
 }) {
   const { mutate, pending } = useApiMutation(api.board.create);
 
-  const onClick = () => {
+  const onClick = () => {    
     mutate({
       orgId,
-      title: "SAurabh",
+      title: "Saurabh",
     }).then(() => toast.success("Board created"))
     .catch((err) => toast.error("Failed to create board"));
   };
