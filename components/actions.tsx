@@ -12,6 +12,9 @@ import { toast } from "sonner";
 import { useApiMutation } from "@/hooks/useApiMutation";
 import { api } from "@/convex/_generated/api";
 import { ImSpinner2 } from "react-icons/im";
+import ConfirmModel from "./ConfirmModel";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 interface ActionsProps {
   children: React.ReactNode;
@@ -65,10 +68,28 @@ export const Actions = ({
           <Link2 className="w-4 h-4 mr-1" />
           Copy Board Link
         </DropdownMenuItem>
-        <DropdownMenuItem className="p-3 cursor-pointer" onClick={deleteBoard}>
-          <Trash2 className="w-4 h-4 mr-1" />
-         {pending ? <ImSpinner2 className="animate-spin w-4 h-4 text-center"/> : "Delete Board"}
-        </DropdownMenuItem>
+        <ConfirmModel
+          header={"Delete Board"}
+          onConfirm={deleteBoard}
+          disabled={pending}
+          description="Are you sure you want to delete this board? This action cannot be undone."
+        >
+          <Button
+            className={cn(
+              "p-3 cursor-pointer text-sm flex justify-start items-center w-full font-normal",
+              pending && "justify-center"
+            )}
+            variant={"ghost"}
+          >
+            {pending ? (
+              <ImSpinner2 className="animate-spin w-4 h-4" />
+            ) : (
+              <>
+                <Trash2 className="w-4 h-4 mr-1" /> Delete Board
+              </>
+            )}
+          </Button>
+        </ConfirmModel>
       </DropdownMenuContent>
     </DropdownMenu>
   );
