@@ -49,7 +49,7 @@ function BoardCard({
             sideOffset={10}
             title={title}
           >
-            <button className="absolute top-1 right-1 z-50">
+            <button className="absolute top-1 right-1 z-50 outline-none">
               <MoreHorizontal className="text-white opacity-75 hover:opacity-100"/>
             </button>
           </Actions>
