@@ -27,9 +27,10 @@ function NewBoardButton({
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={cn(
-        "col-span-1 aspect-[100/127] bg-blue-500 rounded-lg flex flex-col justify-center items-center py-6",
-        (pending || disabled) && "opacity-50 transition-opacity"
+        "col-span-1 aspect-[100/127] bg-blue-600 hover:bg-blue-800 rounded-lg flex flex-col justify-center items-center py-6",
+        (pending || disabled) && "opacity-75 transition-opacity hover:bg-blue-600 duration-500 cursor-not-allowed"
       )}
     >
       <div />
