@@ -3,6 +3,7 @@ import { useApiMutation } from "@/hooks/useApiMutation";
 import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { ImSpinner2 } from "react-icons/im";
 import { toast } from "sonner";
@@ -14,13 +15,16 @@ function NewBoardButton({
   orgId: string;
   disabled?: boolean;
 }) {
+  const router = useRouter();
   const { mutate, pending } = useApiMutation(api.board.create);
 
   const onClick = () => {    
     mutate({
       orgId,
       title: "Saurabh",
-    }).then(() => toast.success("Board created"))
+    }).then((id) => {toast.success("Board created") 
+      router.push(`/board/${id}`)
+    })
     .catch((err) => toast.error("Failed to create board"));
   };
 
