@@ -3,6 +3,7 @@
 import { useSelf } from "@liveblocks/react";
 import { useOthers } from "@liveblocks/react/suspense";
 import UserAvatar from "./UserAvatar";
+import { randomColor } from "@/lib/utils";
 
 const MAX_SHOWN_USERS = 2;
 function Participants() {
@@ -13,12 +14,12 @@ function Participants() {
   return (
     <div className="absolute top-2 right-2 bg-white rounded-md shadow-md p-3 h-12">
       <div className="flex gap-x-2">
-      {currentUser && (
+        {currentUser && (
           <UserAvatar
             src={currentUser?.info?.picture}
             fallback={currentUser?.info?.name?.[0]}
-            name={currentUser?.info?.name+"(You)"}
-            boarderColor={"green-500"}
+            name={currentUser?.info?.name + "(You)"}
+            borderColor={randomColor(currentUser.connectionId)}
           />
         )}
         {users.slice(0, MAX_SHOWN_USERS).map(({ connectionId, info }) => {
@@ -28,14 +29,15 @@ function Participants() {
               src={info?.picture}
               fallback={info?.name?.[0]}
               name={info?.name || "T"}
-              boarderColor={"red-500"}
+              borderColor={randomColor(connectionId)}
             />
           );
         })}
-        
+
         {hasMoreUsers && (
-          <UserAvatar name={`${users.length-MAX_SHOWN_USERS} more` } 
-          fallback={`+${users.length-MAX_SHOWN_USERS}`}
+          <UserAvatar
+            name={`${users.length - MAX_SHOWN_USERS} more`}
+            fallback={`+${users.length - MAX_SHOWN_USERS}`}
           />
         )}
       </div>
