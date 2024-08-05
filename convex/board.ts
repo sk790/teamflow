@@ -146,7 +146,7 @@ export const removeFavorite = mutation({
 });
 
 
-export const get = query({
+export const getBoard = query({
   args:{id:v.id("boards")},
   handler:async(ctx,agrs) =>{
     const board = ctx.db.get(agrs.id);
