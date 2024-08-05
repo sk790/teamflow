@@ -1,4 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
 type Prope = {
@@ -13,7 +12,7 @@ function Info({ boardId }: Prope) {
   );
 }
 
-Info.Skeleton = function InfoSkeleton() {
+export const InfoSkeleton = ()=> {
   return (
     <div className="absolute top-2 left-2 bg-white rounded-md shadow-md h-12 p-1.5 flex items-center w-[300px]">
       {/* <Skeleton className="w-full h-full bg-muted-400"/> */}
