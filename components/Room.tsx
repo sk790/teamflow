@@ -15,14 +15,14 @@ function Room({
   roomId: string;
   fallback:NonNullable<ReactNode>|null
 }) {
+
+    
   return (
-    <LiveblocksProvider
-      publicApiKey={
-        "pk_prod_Dw9CMQRGxYIp6eJgwEYpPV_hmUXnNjiH2m107upGUoaToOp6WzAsfcfZkBM8o4zb"
-      }
+    <LiveblocksProvider 
+      authEndpoint={"/api/liveblocks-auth"}
     >
       <RoomProvider id={roomId}>
-        <ClientSideSuspense fallback={fallback}>
+        <ClientSideSuspense fallback={fallback}>  {/* this is a loading effect while canvas connecting to client room */}
           {children}
         </ClientSideSuspense>
       </RoomProvider>
@@ -31,3 +31,5 @@ function Room({
 }
 
 export default Room;
+
+// publicKey = pk_dev_babH0eMIehbPm9hqCeKE2KmuQWenYv2Okr9jnicqQoAvtWt0joWk7-w_3eMFlAlY

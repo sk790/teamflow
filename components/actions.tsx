@@ -15,7 +15,7 @@ import { ImSpinner2 } from "react-icons/im";
 import ConfirmModel from "./ConfirmModel";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-import { useRenameModel } from "@/store/useRenameModel";
+import { useRenameModel } from "@/zstatand/useRenameModel";
 
 interface ActionsProps {
   children: React.ReactNode;

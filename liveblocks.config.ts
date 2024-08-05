@@ -1,13 +1,12 @@
 // Define Liveblocks types for your application
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
-import {createClient} from "@liveblocks/client"
-import {createRoomContext} from "@liveblocks/react"
+import { createClient } from "@liveblocks/client";
+import { createRoomContext } from "@liveblocks/react";
 
 const client = createClient({
-  publicApiKey: "pk_prod_Dw9CMQRGxYIp6eJgwEYpPV_hmUXnNjiH2m107upGUoaToOp6WzAsfcfZkBM8o4zb"
-})
-
-
+  publicApiKey:
+    "pk_prod_Dw9CMQRGxYIp6eJgwEYpPV_hmUXnNjiH2m107upGUoaToOp6WzAsfcfZkBM8o4zb",
+});
 
 declare global {
   interface Liveblocks {
@@ -25,18 +24,18 @@ declare global {
 
     // Custom user info set when authenticating with a secret key
     UserMeta: {
-      id: string;
-      info: {
+      id?: string;
+      info?: {
         // Example properties, for useSelf, useUser, useOthers, etc.
-        // name: string;
-        // avatar: string;
+        name?: string;
+        picture?: string;
       };
     };
     // Custom events, for useBroadcastEvent, useEventListener
     RoomEvent: {};
-      // Example has two events, using a union
-      // | { type: "PLAY" } 
-      // | { type: "REACTION"; emoji: "🔥" };
+    // Example has two events, using a union
+    // | { type: "PLAY" }
+    // | { type: "REACTION"; emoji: "🔥" };
 
     // Custom metadata set on threads, for useThreads, useCreateThread, etc.
     ThreadMetadata: {
@@ -54,6 +53,4 @@ declare global {
   }
 }
 
-export type RoomProvider = {
-
-}
+export {};

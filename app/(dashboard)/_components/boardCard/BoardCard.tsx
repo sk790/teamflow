@@ -57,6 +57,7 @@ function BoardCard({
         .catch(() => toast.error("Failed to add favorite"));
     }
   };
+  
 
   return (
     <Link href={`/board/${id}`}>

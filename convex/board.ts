@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 
 const images = [
   "/search-not-found.svg", //add more images here later
@@ -144,3 +144,12 @@ export const removeFavorite = mutation({
     return board;
   },
 });
+
+
+export const get = query({
+  args:{id:v.id("boards")},
+  handler:async(ctx,agrs) =>{
+    const board = ctx.db.get(agrs.id);
+    return board;
+  }
+})

@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { useRenameModel } from "@/store/useRenameModel";
+import { useRenameModel } from "@/zstatand/useRenameModel";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useApiMutation } from "@/hooks/useApiMutation";
@@ -39,10 +39,16 @@ function RenameModel() {
         onClose();
       })
       .catch((err) => {
-        if(err.message.includes("Title cannot be longer than 50 characters or shorter than 2")){
-          toast.error("Title cannot be longer than 50 characters or shorter than 2")
+        if (
+          err.message.includes(
+            "Title cannot be longer than 50 characters or shorter than 2"
+          )
+        ) {
+          toast.error(
+            "Title cannot be longer than 50 characters or shorter than 2"
+          );
         }
-      })
+      });
   };
 
   return (
@@ -65,8 +71,16 @@ function RenameModel() {
             <DialogClose asChild>
               <Button type="button">Cancel</Button>
             </DialogClose>
-            <Button disabled={pending} type="submit" className="w-full max-w-[78px]">
-              {pending ?<ImSpinner2 className="animate-spin w-4 h-4"/> : "Save"}
+            <Button
+              disabled={pending}
+              type="submit"
+              className="w-full max-w-[78px]"
+            >
+              {pending ? (
+                <ImSpinner2 className="animate-spin w-4 h-4" />
+              ) : (
+                "Save"
+              )}
             </Button>
           </DialogFooter>
         </form>
