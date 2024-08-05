@@ -30,18 +30,19 @@ export async function POST(request: Request) {
   const board = await convex.query(api.board.get, { id: room });
 
   if (board?.orgId !== authorization?.orgId) {
-    return new Response("user not Unauthorized", { status: 403 });
+    return new Response("user not Unauthorized for this room", { status: 403 });
   }
 
   const userInfo = {
     name: user.firstName || "Teammeat",
     picture: user.imageUrl,
   };
-  const session = liveBlocks.prepareSession(user.id, { userInfo:userInfo });
+  const session = liveBlocks.prepareSession(user.id, { userInfo });
 
   if (room) {
     session.allow(room, session.FULL_ACCESS);
   }
   const { status, body } = await session.authorize();
+  
   return new Response(body, { status });
 }
