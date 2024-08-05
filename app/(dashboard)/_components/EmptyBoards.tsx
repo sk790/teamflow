@@ -20,7 +20,7 @@ function EmptyBoards() {
     if(!organization) return
     mutate({
       orgId: organization.id,
-      title: "New Board",
+      title: "Untitled",
     })
     .then((id)=>{
       toast.success("Board created")

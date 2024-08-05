@@ -21,7 +21,7 @@ function NewBoardButton({
   const onClick = () => {    
     mutate({
       orgId,
-      title: "Saurabh",
+      title: "Untitled",
     }).then((id) => {toast.success("Board created") 
       router.push(`/board/${id}`)
     })
