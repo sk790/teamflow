@@ -8,6 +8,7 @@ const client = createClient({
 })
 
 
+
 declare global {
   interface Liveblocks {
     // Each user's Presence, for useMyPresence, useOthers, etc.
@@ -31,7 +32,6 @@ declare global {
         // avatar: string;
       };
     };
-
     // Custom events, for useBroadcastEvent, useEventListener
     RoomEvent: {};
       // Example has two events, using a union
@@ -54,4 +54,6 @@ declare global {
   }
 }
 
-export {};
+export type RoomProvider = {
+
+}
