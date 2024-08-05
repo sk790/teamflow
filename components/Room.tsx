@@ -4,13 +4,16 @@ import {
   RoomProvider,
   ClientSideSuspense,
 } from "@liveblocks/react/suspense";
+import { ReactNode } from "react";
 
 function Room({
   children,
   roomId,
+  fallback
 }: {
   children: React.ReactNode;
   roomId: string;
+  fallback:NonNullable<ReactNode>|null
 }) {
   return (
     <LiveblocksProvider
@@ -19,7 +22,7 @@ function Room({
       }
     >
       <RoomProvider id={roomId}>
-        <ClientSideSuspense fallback={<div>Loading...</div>}>
+        <ClientSideSuspense fallback={fallback}>
           {children}
         </ClientSideSuspense>
       </RoomProvider>

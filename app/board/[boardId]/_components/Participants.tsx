@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/skeleton'
 import React from 'react'
 
 function Participants() {
@@ -8,4 +9,11 @@ function Participants() {
   )
 }
 
+Participants.Skeleton = function ParticipantsSkeleton() {
+  return (
+    <div className='absolute top-2 right-2 h-12 w-24  bg-white rounded-md shadow-md ]'>
+      {/* <Skeleton className='w-full h-full bg-muted-400'/> */}
+    </div>
+  )
+}
 export default Participants
