@@ -19,6 +19,13 @@ function Footer({
   onClick,
   disabled,
 }: Props) {
+
+  const onClickStar = (e: React.MouseEvent<HTMLButtonElement,MouseEvent>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onClick();
+  };
+
   return (
     <div className="relative bg-white p-3">
       <p className="text-[13px] truncate max-w-[calc(100%-20px)]">{title}</p>
@@ -28,7 +35,7 @@ function Footer({
 
       <button
         disabled={disabled}
-        onClick={onClick}
+        onClick={onClickStar}
         className={cn(
           "opacity-0 group-hover:opacity-100 transition-opacity absolute top-3 right-3 hover:text-blue-500 text-muted-foreground",
           disabled && "cursor-not-allowed opacity-75"
