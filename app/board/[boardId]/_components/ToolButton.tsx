@@ -23,7 +23,8 @@ function ToolButton({
     <Hint label={label} side="right" sideOffset={12}>
       <Button
         disabled={isDisabled}
-        variant={isActive ? "default" : "ghost"}
+        className="transition-all duration-300"
+        variant={isActive ? "toolButton" : "ghost"}
         onClick={onClick}
         size={"icon"}
       >
