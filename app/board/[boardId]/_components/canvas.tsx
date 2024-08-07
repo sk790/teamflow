@@ -23,6 +23,7 @@ import { CursorsPresence } from "./CursorsPresence";
 import { pointerEventToCanvasPoint } from "@/lib/utils";
 import { useStorage } from "@liveblocks/react";
 import { LiveObject } from "@liveblocks/client";
+import {LayerPreview} from "./LayerPreview";
 
 export const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -42,11 +43,10 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
   });
 
   const onWheel = useCallback((e: React.WheelEvent) => {
-    if (e.deltaY > 0) {
-      setCamera((camera) => ({ x: camera.x - 10, y: camera.y - 10 }));
-    } else {
-      setCamera((camera) => ({ x: camera.x + 10, y: camera.y + 10 }));
-    }
+    setCamera((camera) => ({
+      x: camera.x - e.deltaX,
+      y: camera.y - e.deltaY
+    }))
   }, []);
 
   const history = useHistory();
@@ -138,6 +138,14 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
             transform: `translateX(${camera.x}px) translateY(${camera.y}px)`,
           }}
         >
+          {layerIds?.map((layerId) => (
+            <LayerPreview 
+              key={layerId}
+              id={layerId}
+              onLayerPointerDown = {()=>{}}
+              selectionColor = "#000"
+            />
+          ))}
           <CursorsPresence />
         </g>
       </svg>
