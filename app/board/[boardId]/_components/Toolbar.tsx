@@ -10,11 +10,11 @@ import {
   Type,
   Undo2,
 } from "lucide-react";
-import { canvasMode, canvasState, LayerType } from "@/types/canvas";
+import { CanvasMode, CanvasState, LayerType } from "@/types/canvas";
 
 interface ToolBarProps {
-  canvasState: canvasState;
-  setCanvasState: (newState: canvasState) => void;
+  CanvasState: CanvasState;
+  setCanvasState: (newState: CanvasState) => void;
   undo: () => void;
   redo: () => void;
   canUndo: boolean;
@@ -22,7 +22,7 @@ interface ToolBarProps {
 }
 
 function Toolbar({
-  canvasState,
+  CanvasState,
   setCanvasState,
   undo,
   redo,
@@ -35,13 +35,13 @@ function Toolbar({
         <ToolButton
           label="Select"
           icon={MousePointer2}
-          onClick={() => setCanvasState({ mode: canvasMode.None })}
+          onClick={() => setCanvasState({ mode: CanvasMode.None })}
           isActive={
-            canvasState.mode === canvasMode.None ||
-            canvasState.mode === canvasMode.Pressing ||
-            canvasState.mode === canvasMode.SelectionNet ||
-            canvasState.mode === canvasMode.Translating ||
-            canvasState.mode === canvasMode.Resizing
+            CanvasState.mode === CanvasMode.None ||
+            CanvasState.mode === CanvasMode.Pressing ||
+            CanvasState.mode === CanvasMode.SelectionNet ||
+            CanvasState.mode === CanvasMode.Translating ||
+            CanvasState.mode === CanvasMode.Resizing
           }
         />
         <ToolButton
@@ -49,13 +49,13 @@ function Toolbar({
           icon={Type}
           onClick={() =>
             setCanvasState({
-              mode: canvasMode.Inserting,
+              mode: CanvasMode.Inserting,
               layerType: LayerType.Text,
             })
           }
           isActive={
-            canvasState.mode === canvasMode.Inserting &&
-            canvasState.layerType === LayerType.Text
+            CanvasState.mode === CanvasMode.Inserting &&
+            CanvasState.layerType === LayerType.Text
           }
         />
         <ToolButton
@@ -63,13 +63,13 @@ function Toolbar({
           icon={StickyNote}
           onClick={() =>
             setCanvasState({
-              mode: canvasMode.Inserting,
+              mode: CanvasMode.Inserting,
               layerType: LayerType.Note,
             })
           }
           isActive={
-            canvasState.mode === canvasMode.Inserting &&
-            canvasState.layerType === LayerType.Note
+            CanvasState.mode === CanvasMode.Inserting &&
+            CanvasState.layerType === LayerType.Note
           }
         />
         <ToolButton
@@ -77,13 +77,13 @@ function Toolbar({
           icon={Square}
           onClick={() =>
             setCanvasState({
-              mode: canvasMode.Inserting,
+              mode: CanvasMode.Inserting,
               layerType: LayerType.Rectangle,
             })
           }
           isActive={
-            canvasState.mode === canvasMode.Inserting &&
-            canvasState.layerType === LayerType.Rectangle
+            CanvasState.mode === CanvasMode.Inserting &&
+            CanvasState.layerType === LayerType.Rectangle
           }
         />
         <ToolButton
@@ -91,20 +91,20 @@ function Toolbar({
           icon={Circle}
           onClick={() =>
             setCanvasState({
-              mode: canvasMode.Inserting,
+              mode: CanvasMode.Inserting,
               layerType: LayerType.Ellipse,
             })
           }
           isActive={
-            canvasState.mode === canvasMode.Inserting &&
-            canvasState.layerType === LayerType.Ellipse
+            CanvasState.mode === CanvasMode.Inserting &&
+            CanvasState.layerType === LayerType.Ellipse
           }
         />
         <ToolButton
           label="Pen"
           icon={Pencil}
-          onClick={() => setCanvasState({ mode: canvasMode.Pencil })}
-          isActive={canvasState.mode === canvasMode.Pencil}
+          onClick={() => setCanvasState({ mode: CanvasMode.Pencil })}
+          isActive={CanvasState.mode === CanvasMode.Pencil}
         />
       </div>
       <div className="bg-white rounded-md shadow-md flex items-center flex-col p-1 gap-y-2">

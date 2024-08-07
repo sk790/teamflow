@@ -84,24 +84,24 @@ export enum Side {
   Left = 8,
 }
 
-export type canvasState =
-  | { mode: canvasMode.None }
-  | { mode: canvasMode.Pressing; origin: Point }
-  | { mode: canvasMode.SelectionNet; origin: Point; current?: Point }
-  | { mode: canvasMode.Translating; current: Point }
+export type CanvasState =
+  | { mode: CanvasMode.None }
+  | { mode: CanvasMode.Pressing; origin: Point }
+  | { mode: CanvasMode.SelectionNet; origin: Point; current?: Point }
+  | { mode: CanvasMode.Translating; current: Point }
   | {
-      mode: canvasMode.Inserting;
+      mode: CanvasMode.Inserting;
       layerType:
         | LayerType.Ellipse
         | LayerType.Rectangle
-        | LayerType.Path
+        // | LayerType.Path
         | LayerType.Text
         | LayerType.Note;
     }
-  | { mode: canvasMode.Resizing; initiaBounds: XYWH; corner: Side }
-  | { mode: canvasMode.Pencil };
+  | { mode: CanvasMode.Resizing; initiaBounds: XYWH; corner: Side }
+  | { mode: CanvasMode.Pencil };
 
-export enum canvasMode {
+export enum CanvasMode {
   None,
   Pressing,
   SelectionNet,
@@ -110,3 +110,10 @@ export enum canvasMode {
   Resizing,
   Pencil,
 }
+
+export type Layer =
+  | EllipseLayer
+  | RectangleLayer
+  | PathLayer
+  | TextLayer
+  | NoteLayer;

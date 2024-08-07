@@ -12,7 +12,7 @@ interface HintProps {
   align?: "start" | "center" | "end";
   sideOffset?: number;
   alignOffset?: number;
-  bgColor: string;
+  bgColor?: string;
 }
 
 export const Hint = ({
