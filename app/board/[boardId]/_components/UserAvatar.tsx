@@ -11,8 +11,8 @@ interface Props {
 
 function UserAvatar({ borderColor, src, name, fallback }: Props) {
   return (
-    <Hint label={name || "Teammate"} side="bottom" sideOffset={12}>
-      <Avatar className="w-8 h-8 border-2" style={{ borderColor }}>
+    <Hint label={name || "Teammate"} side="bottom" sideOffset={12} bgColor = {borderColor || "black"}>
+      <Avatar className="w-8 h-8 border-4" style={{ borderColor }}>
         <AvatarImage src={src} />
         <AvatarFallback className="text-xs font-semibold">
           {fallback}

@@ -9,20 +9,18 @@ import { ReactNode } from "react";
 function Room({
   children,
   roomId,
-  fallback
+  fallback,
 }: {
   children: React.ReactNode;
   roomId: string;
-  fallback:NonNullable<ReactNode>|null
+  fallback: NonNullable<ReactNode> | null;
 }) {
-
-    
   return (
-    <LiveblocksProvider 
-      authEndpoint={"/api/liveblocks-auth"}
-    >
-      <RoomProvider id={roomId}>
-        <ClientSideSuspense fallback={fallback}>  {/* this is a loading effect while canvas connecting to client room */}
+    <LiveblocksProvider authEndpoint={"/api/liveblocks-auth"} throttle={16}>
+      <RoomProvider id={roomId} initialPresence={{ cursor: null }}>
+        <ClientSideSuspense fallback={fallback}>
+          {" "}
+          {/* this is a loading effect while canvas connecting to client room */}
           {children}
         </ClientSideSuspense>
       </RoomProvider>

@@ -12,6 +12,7 @@ interface HintProps {
   align?: "start" | "center" | "end";
   sideOffset?: number;
   alignOffset?: number;
+  bgColor: string;
 }
 
 export const Hint = ({
@@ -21,13 +22,16 @@ export const Hint = ({
   align,
   sideOffset,
   alignOffset,
+  bgColor
+
 }: HintProps) => {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent
-          className="text-white bg-black border-black"
+        style={{ backgroundColor: bgColor }}
+          className="text-whit border-black"
           side={side}
           align={align}
           sideOffset={sideOffset}
