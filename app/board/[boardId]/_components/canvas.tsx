@@ -10,7 +10,7 @@ import { nanoid } from "nanoid";
 import Info from "./Info";
 import Participants from "./Participants";
 import Toolbar from "./Toolbar";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Camera,
   CanvasMode,
@@ -20,10 +20,11 @@ import {
   Point,
 } from "@/types/canvas";
 import { CursorsPresence } from "./CursorsPresence";
-import { pointerEventToCanvasPoint } from "@/lib/utils";
-import { useStorage } from "@liveblocks/react";
+import { pointerEventToCanvasPoint, randomColor } from "@/lib/utils";
+import { useOthersMapped, useStorage } from "@liveblocks/react";
 import { LiveObject } from "@liveblocks/client";
-import {LayerPreview} from "./LayerPreview";
+import { LayerPreview } from "./LayerPreview";
+import {SelectionBox} from "./SelectionBox";
 
 export const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -31,22 +32,19 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
   const [canvasState, setCanvasState] = useState<CanvasState>({
     mode: CanvasMode.None,
   });
-
   const MAX_LAYERS = 100;
-
   const [camera, setCamera] = useState<Camera>({ x: 0, y: 0 });
-
   const [lastUsedColor, setLastUsedColor] = useState<Color>({
-    r: 0,
-    g: 0,
-    b: 0,
+    r: 120,
+    g: 255,
+    b: 255,
   });
 
   const onWheel = useCallback((e: React.WheelEvent) => {
     setCamera((camera) => ({
       x: camera.x - e.deltaX,
-      y: camera.y - e.deltaY
-    }))
+      y: camera.y - e.deltaY,
+    }));
   }, []);
 
   const history = useHistory();
@@ -114,6 +112,41 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     [camera, canvasState, history, insertLayer]
   );
 
+  const selections = useOthersMapped((user) => user.presence?.selection);
+  const layerIdsToColorSelection = useMemo(() => {
+    const layerIdsToColorSelection: Record<string, string> = {};
+
+    for (const user of selections) {
+      const [connectionId, selection] = user;
+
+      for (const layerId of selection) {
+        layerIdsToColorSelection[layerId] = randomColor(connectionId);
+      }
+    }
+    console.log("layerIdsToColorSelection", layerIdsToColorSelection);
+    
+    return layerIdsToColorSelection;
+  }, [selections]);
+
+  const onLayerPointerDown = useMutation((
+    {self,setMyPresence},
+    e: React.PointerEvent,
+    layerId: string
+  )=>{
+    if(canvasState.mode === CanvasMode.Inserting || 
+      canvasState.mode === CanvasMode.Pencil){
+        return;
+      }
+      history.pause()
+      e.stopPropagation()
+
+      const point = pointerEventToCanvasPoint(e, camera);
+      if(!self.presence.selection.includes(layerId)){
+        setMyPresence({selection:[layerId]},{addToHistory:true})
+      }
+      setCanvasState({mode:CanvasMode.Translating,current:point})
+  },[setCanvasState,history,camera,canvasState.mode])
+
   return (
     <main className="w-full h-full relative bg-neutral-100 touch-none">
       <Info boardId={boardId} />
@@ -139,13 +172,16 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
           }}
         >
           {layerIds?.map((layerId) => (
-            <LayerPreview 
+            <LayerPreview
               key={layerId}
               id={layerId}
-              onLayerPointerDown = {()=>{}}
-              selectionColor = "#000"
+              onLayerPointerDown={onLayerPointerDown}
+              selectionColor={layerIdsToColorSelection[layerId]}
             />
           ))}
+          <SelectionBox
+          onResizeHandlePointerDown = {()=>{}}
+          />
           <CursorsPresence />
         </g>
       </svg>
