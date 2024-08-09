@@ -32,6 +32,7 @@ import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./LayerPreview";
 import { SelectionBox } from "./SelectionBox";
 import { X } from "lucide-react";
+import { SelectionToolbar } from "./SelectionToolbar";
 
 export const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -270,6 +271,10 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
         redo={history.redo}
         canUndo={canUndo}
         canRedo={canRedo}
+      />
+      <SelectionToolbar 
+      camera = {camera}
+      setLastUsedColor={setLastUsedColor}
       />
       <svg
         className="w-[100vw] h-[100vh]"
