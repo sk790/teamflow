@@ -119,6 +119,12 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     [canvasState]
   );
 
+  const unselectLayer = useMutation(({ self, setMyPresence }) => {
+    if (self.presence.selection.length > 0) {
+      setMyPresence({ selection: [] }, { addToHistory: true });
+    }
+  }, []);
+
   const resizeSelectedLayer = useMutation(
     ({ storage, self }, point: Point) => {
       if (canvasState.mode !== CanvasMode.Resizing) {
@@ -182,18 +188,40 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     setMyPresence({ cursor: null });
   }, []);
 
-  const onPointerUp = useMutation(
-    ({}, e) => {
+  const onPointerDown = useCallback(
+    //it is help of we unselect layere
+    (e: React.PointerEvent) => {
       const point = pointerEventToCanvasPoint(e, camera);
       if (canvasState.mode === CanvasMode.Inserting) {
+        return;
+      }
+      //add case for drawing
+      setCanvasState({ origin: point, mode: CanvasMode.Pressing });
+    },
+    [camera, canvasState.mode, setCanvasState]
+  );
+
+  const onPointerUp = useMutation(     //fired when i release the mouse click
+   
+    ({}, e) => {
+      const point = pointerEventToCanvasPoint(e, camera);
+      console.log("onPointerUp", point);
+
+      if (
+        canvasState.mode === CanvasMode.None ||
+        canvasState.mode === CanvasMode.Pressing
+      ) {
+        console.log("unselect");
+        unselectLayer();
+        setCanvasState({ mode: CanvasMode.None });
+      } else if (canvasState.mode === CanvasMode.Inserting) {
         insertLayer(canvasState.layerType, point);
       } else {
         setCanvasState({ mode: CanvasMode.None });
       }
-      console.log({ point, mode: canvasState.mode });
       history.resume();
     },
-    [camera, canvasState, history, insertLayer]
+    [camera, canvasState, history, insertLayer, unselectLayer]
   );
 
   const selections = useOthersMapped((user) => user.presence?.selection);
@@ -207,7 +235,6 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
         layerIdsToColorSelection[layerId] = randomColor(connectionId);
       }
     }
-    console.log("layerIdsToColorSelection", layerIdsToColorSelection);
 
     return layerIdsToColorSelection;
   }, [selections]);
@@ -250,6 +277,7 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
         onWheel={onWheel}
         onPointerLeave={onPointerLeave}
         onPointerUp={onPointerUp}
+        onPointerDown={onPointerDown}
       >
         <g
           style={{
