@@ -31,6 +31,7 @@ import { useOthersMapped, useStorage } from "@liveblocks/react";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./LayerPreview";
 import { SelectionBox } from "./SelectionBox";
+import { X } from "lucide-react";
 
 export const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -90,10 +91,38 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     [lastUsedColor]
   );
 
+  const translatSelectedLayer = useMutation(
+    ({ storage, self }, point: Point) => {
+      if (canvasState.mode !== CanvasMode.Translating) {
+        return;
+      }
+      const offset = {
+        x: point.x - canvasState.current.x,
+        y: point.y - canvasState.current.y,
+      };
+      const liveLayers = storage.get("layers");
+
+      for (const id of self.presence.selection) {
+        const layer = liveLayers.get(id);
+        if (layer) {
+          layer.update({
+            x: layer.get("x") + offset.x,
+            y: layer.get("y") + offset.y,
+          });
+        }
+      }
+      setCanvasState({
+        mode: CanvasMode.Translating,
+        current: point,
+      });
+    },
+    [canvasState]
+  );
+
   const resizeSelectedLayer = useMutation(
     ({ storage, self }, point: Point) => {
       if (canvasState.mode !== CanvasMode.Resizing) {
-        return; 
+        return;
       }
       const bounds = resizeBounds(
         canvasState.initiaBounds,
@@ -136,14 +165,17 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
 
       const current = pointerEventToCanvasPoint(e, camera);
 
-      if (canvasState.mode === CanvasMode.Resizing) {
+      if (canvasState.mode === CanvasMode.Translating) {
+        console.log("translating");
+        translatSelectedLayer(current);
+      } else if (canvasState.mode === CanvasMode.Resizing) {
         console.log("resizing");
         resizeSelectedLayer(current);
       }
 
       setMyPresence({ cursor: current });
     },
-    [canvasState,resizeSelectedLayer, camera]
+    [canvasState, resizeSelectedLayer, camera, translatSelectedLayer]
   );
 
   const onPointerLeave = useMutation(({ setMyPresence }) => {
