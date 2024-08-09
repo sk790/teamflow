@@ -10,17 +10,17 @@ interface Props {
 }
 
 export const SelectionBox = memo(({ onResizeHandlePointerDown }: Props) => {
-
-  const soleLayerId = useSelf((me) => 
+  const soleLayerId = useSelf((me) =>
     me.presence.selection.length === 1 ? me.presence.selection[0] : null
-    
   );
-  
 
-  const isShowingHandles = useStorage((root) => 
-    soleLayerId && root.layers.get(soleLayerId)?.type !== LayerType.Path
+  const HANDLE_WIDTH = 8;
+  const HANDLE_HEIGHT = 8;
+
+  const isShowingHandles = useStorage(
+    (root) =>
+      soleLayerId && root.layers.get(soleLayerId)?.type !== LayerType.Path
   );
-  
 
   const bounds = UseSelectionBounds();
 
@@ -40,20 +40,122 @@ export const SelectionBox = memo(({ onResizeHandlePointerDown }: Props) => {
         width={bounds.width}
         height={bounds.height}
       />
-      {isShowingHandles &&
-      <>
-      <rect
-      className="fill-white stroke-blue-500 stroke-1"
-      x = {0}
-      y = {0}
-      style={{
-        cursor: "nwse-resize",
-        width: "8px",
-        height: "8px",
-        transform: `translate(${bounds.x-8/2}px, ${bounds.y-8/2}px)`,
-      }}
-      />
-      </>}
+      {isShowingHandles && (
+        <>
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "nwse-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x - HANDLE_WIDTH/2}px, ${bounds.y - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "ns-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x+bounds.width/2 - HANDLE_WIDTH/2}px, ${bounds.y - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "nesw-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x+bounds.width - HANDLE_WIDTH/2}px, ${bounds.y - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "ew-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x+bounds.width - HANDLE_WIDTH/2}px, ${bounds.y+bounds.height/2 - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "nw-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x+bounds.width - HANDLE_WIDTH/2}px, ${bounds.y+bounds.height - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "ns-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x+bounds.width/2 - HANDLE_WIDTH/2}px, ${bounds.y+bounds.height - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "nesw-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x - HANDLE_WIDTH/2}px, ${bounds.y+bounds.height - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+          <rect
+            className="fill-white stroke-blue-500 stroke-1"
+            x={0}
+            y={0}
+            style={{
+              cursor: "ew-resize",
+              width: `${HANDLE_WIDTH}px`,
+              height: `${HANDLE_HEIGHT}px`,
+              transform: `translate(${bounds.x - HANDLE_WIDTH/2}px, ${bounds.y+bounds.height/2 - HANDLE_HEIGHT/2}px)`,
+            }}
+            onPointerDown={(e)=>{
+              e.stopPropagation();
+            }}
+          />
+        </>
+      )}
     </>
   );
 });
