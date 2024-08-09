@@ -3,6 +3,10 @@ import { Camera, Color } from "@/types/canvas";
 import { useMutation, useSelf } from "@liveblocks/react";
 import { memo } from "react";
 import { ColorPicker } from "./ColorPicker";
+import { DeleteLayer } from "@/hooks/useDeleteLayer";
+import { Hint } from "@/components/Hint";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 
 interface Props {
   camera: Camera;
@@ -23,6 +27,7 @@ export const SelectionToolbar = memo(({ camera, setLastUsedColor }: Props) => {
     })
   },[selection,setLastUsedColor])
 
+  const deleteLayer = DeleteLayer();
 
   const selectionBounds = UseSelectionBounds();
   if (!selectionBounds) {
@@ -44,6 +49,13 @@ export const SelectionToolbar = memo(({ camera, setLastUsedColor }: Props) => {
       <ColorPicker
       onChange = {setFill}
       />
+      <div className="flex items-center pl-2 ml-2 border-l border-neutral-200">
+        <Hint label="Delete">
+          <Button variant={"ghost"} onClick={deleteLayer}>
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </Hint>
+      </div>
     </div>
   );
 });
