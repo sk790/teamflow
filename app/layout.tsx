@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import ModalProvider from "@/providers/modalProvider";
 const inter = Inter({ subsets: ["latin"] });
 import NextTopLoader from "nextjs-toploader"
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "TeamFlow",
@@ -19,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className)}>
         <NextTopLoader/>
         <ConvexClientProvider>
           <ModalProvider/>
