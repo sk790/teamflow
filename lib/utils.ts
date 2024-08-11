@@ -93,3 +93,8 @@ export function findInterectingLayerWithRectangle(
   }
   return Ids;
 }
+
+export function getContrastingColor(color: Color) {
+  const yiq = ((color.r * 299) + (color.g * 587) + (color.b * 114)) / 1000;
+  return yiq >= 128 ? "black" : "white";
+}

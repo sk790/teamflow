@@ -4,6 +4,7 @@ import React, { memo } from "react";
 import { Rectangle } from "./Rectangle";
 import { Ellipse } from "./Ellipse";
 import { Text } from "./Text";
+import { Note } from "./Note";
 
 interface Props {
   id: string;
@@ -16,6 +17,15 @@ export const LayerPreview = memo(
     const layer = useStorage((root) => root.layers.get(id));
     if (!layer) return null;
     switch (layer.type) {
+      case LayerType.Note:
+        return (
+          <Note
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
       case LayerType.Text:
         return (
           <Text
