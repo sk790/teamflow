@@ -31,7 +31,7 @@ export const SelectionBox = memo(({ onResizeHandlerPointerDown }: Props) => {
   return (
     <>
       <rect
-        className="fill-transparent stroke-red-500 stroke-1 pointer-events-none"
+        className="fill-transparent stroke-blue-500 stroke-1 pointer-events-none"
         style={{
           transform: `translate(${bounds.x}px, ${bounds.y}px)`,
         }}

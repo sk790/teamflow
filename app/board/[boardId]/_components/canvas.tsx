@@ -23,6 +23,7 @@ import {
 } from "@/types/canvas";
 import { CursorsPresence } from "./CursorsPresence";
 import {
+  findInterectingLayerWithRectangle,
   pointerEventToCanvasPoint,
   randomColor,
   resizeBounds,
@@ -91,6 +92,31 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     },
     [lastUsedColor]
   );
+
+  const updateSelectionNet = useMutation(
+    ({ storage, setMyPresence }, current: Point, origin: Point) => {
+      const layers = storage.get("layers").toImmutable();
+      const layerIds = storage.get("layerIds").toImmutable();
+      setCanvasState({ mode: CanvasMode.SelectionNet, origin, current });
+
+      const ids = findInterectingLayerWithRectangle(
+        layerIds,
+        layers,
+        origin,
+        current
+      );
+      setMyPresence({ selection: ids }, { addToHistory: true });
+    },
+    [layerIds]
+  );
+
+  const startMultiSelection = useCallback((current: Point, origin: Point) => {
+    if (Math.abs(current.x - origin.x) + Math.abs(current.y - origin.y) > 5) {
+      console.log("startMultiSelection");
+
+      setCanvasState({ mode: CanvasMode.SelectionNet, origin, current });
+    }
+  }, []);
 
   const translatSelectedLayer = useMutation(
     ({ storage, self }, point: Point) => {
@@ -172,7 +198,14 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
 
       const current = pointerEventToCanvasPoint(e, camera);
 
-      if (canvasState.mode === CanvasMode.Translating) {
+      if (canvasState.mode === CanvasMode.None) {
+        // console.log(camera);
+      } else if (canvasState.mode === CanvasMode.SelectionNet) {
+        updateSelectionNet(current, canvasState.origin);
+        console.log({ current, canvasState });
+      } else if (canvasState.mode === CanvasMode.Pressing) {
+        startMultiSelection(current, canvasState.origin);
+      } else if (canvasState.mode === CanvasMode.Translating) {
         console.log("translating");
         translatSelectedLayer(current);
       } else if (canvasState.mode === CanvasMode.Resizing) {
@@ -202,8 +235,9 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     [camera, canvasState.mode, setCanvasState]
   );
 
-  const onPointerUp = useMutation(     //fired when i release the mouse click
-   
+  const onPointerUp = useMutation(
+    //fired when i release the mouse click
+
     ({}, e) => {
       const point = pointerEventToCanvasPoint(e, camera);
       console.log("onPointerUp", point);
@@ -272,10 +306,7 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
         canUndo={canUndo}
         canRedo={canRedo}
       />
-      <SelectionToolbar 
-      camera = {camera}
-      setLastUsedColor={setLastUsedColor}
-      />
+      <SelectionToolbar camera={camera} setLastUsedColor={setLastUsedColor} />
       <svg
         className="w-[100vw] h-[100vh]"
         onPointerMove={onPointerMove}
@@ -300,6 +331,16 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
           <SelectionBox
             onResizeHandlerPointerDown={onResizeHandlerPointerDown}
           />
+          {canvasState.mode === CanvasMode.SelectionNet &&
+            canvasState.current != null && (
+              <rect
+                className="fill-transparent stroke-blue-500 stroke-1"
+                x={Math.min(canvasState.origin.x, canvasState.current.x)}
+                y={Math.min(canvasState.origin.y, canvasState.current.y)}
+                width={Math.abs(canvasState.origin.x - canvasState.current.x)}
+                height={Math.abs(canvasState.origin.y - canvasState.current.y)}
+              />
+            )}
           <CursorsPresence />
         </g>
       </svg>
