@@ -46,7 +46,7 @@ export const getBoards = query({
         .collect();
     }
 
-    const boardFavoriteWithRelation = boards.map((board) => {
+    const boardFavoriteWithRelation = boards.map(async(board) => {
       return ctx.db
         .query("userFavorites")
         .withIndex("by_user_board", (q) =>
