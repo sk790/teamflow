@@ -7,7 +7,7 @@ function EmptySearch() {
       <Image
         src={"/search-not-found.svg"}
         alt="empty"
-        width={140}
+        width={200}
         height={140}
       />
 

@@ -5,9 +5,9 @@ function EmptyFavorite() {
   return (
     <div className="w-full h-full flex justify-center items-center flex-col">
       <Image
-        src={"/empty-favorite.svg"}
+        src={"/fav.svg"}
         alt="empty-favorite"
-        width={140}
+        width={200}
         height={140}
         className="font-bold"
       />

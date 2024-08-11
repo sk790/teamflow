@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 function EmptyOrg() {
   return (
     <div className="w-full h-full flex justify-center items-center flex-col">
-      <img src={"/empty.png"} alt="empty" width={250} height={250} />
+      <img src={"/org.svg"} alt="empty" width={250} height={250} />
       <h2 className="font-semibold mt-6 text-2xl">Welcome to TeamFlow</h2>
       <p className="text-muted-foreground mt-2 text-sm">
         Create an organization to get started
