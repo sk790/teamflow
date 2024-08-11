@@ -112,7 +112,7 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
 
   const startMultiSelection = useCallback((current: Point, origin: Point) => {
     if (Math.abs(current.x - origin.x) + Math.abs(current.y - origin.y) > 5) {
-      console.log("startMultiSelection");
+      // console.log("startMultiSelection");
 
       setCanvasState({ mode: CanvasMode.SelectionNet, origin, current });
     }
@@ -177,10 +177,10 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
       corner: Side,
       initialBounds: XYWH
     ) => {
-      console.log({
-        corner,
-        initialBounds,
-      });
+      // console.log({
+      //   corner,
+      //   initialBounds,
+      // });
 
       history.pause();
       setCanvasState({
@@ -202,14 +202,14 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
         // console.log(camera);
       } else if (canvasState.mode === CanvasMode.SelectionNet) {
         updateSelectionNet(current, canvasState.origin);
-        console.log({ current, canvasState });
+        // console.log({ current, canvasState });
       } else if (canvasState.mode === CanvasMode.Pressing) {
         startMultiSelection(current, canvasState.origin);
       } else if (canvasState.mode === CanvasMode.Translating) {
-        console.log("translating");
+        // console.log("translating");
         translatSelectedLayer(current);
       } else if (canvasState.mode === CanvasMode.Resizing) {
-        console.log("resizing");
+        // console.log("resizing");
         resizeSelectedLayer(current);
       }
 
@@ -240,13 +240,13 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
 
     ({}, e) => {
       const point = pointerEventToCanvasPoint(e, camera);
-      console.log("onPointerUp", point);
+      // console.log("onPointerUp", point);
 
       if (
         canvasState.mode === CanvasMode.None ||
         canvasState.mode === CanvasMode.Pressing
       ) {
-        console.log("unselect");
+        // console.log("unselect");
         unselectLayer();
         setCanvasState({ mode: CanvasMode.None });
       } else if (canvasState.mode === CanvasMode.Inserting) {

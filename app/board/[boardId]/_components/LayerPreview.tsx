@@ -3,6 +3,7 @@ import { useStorage } from "@liveblocks/react";
 import React, { memo } from "react";
 import { Rectangle } from "./Rectangle";
 import { Ellipse } from "./Ellipse";
+import { Text } from "./Text";
 
 interface Props {
   id: string;
@@ -15,6 +16,15 @@ export const LayerPreview = memo(
     const layer = useStorage((root) => root.layers.get(id));
     if (!layer) return null;
     switch (layer.type) {
+      case LayerType.Text:
+        return (
+          <Text
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
       case LayerType.Ellipse:
         return (
           <Ellipse
