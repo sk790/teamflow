@@ -1,13 +1,10 @@
-const secret =
-  "sk_dev_PHPgPrw12S8UtpmLWEmDdsSBpqZmGBOWMqJabq1BIgFVXKXcZtF809lJcYiAn9hn";
-
 import { Liveblocks } from "@liveblocks/node";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "@/convex/_generated/api";
 import { auth, currentUser } from "@clerk/nextjs/server";
 
 const liveBlocks = new Liveblocks({
-  secret: secret,
+  secret: process.env.LIVEBLOCKS_SECRET_KEY!,
 });
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
