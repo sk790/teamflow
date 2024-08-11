@@ -24,14 +24,14 @@ function OrgItems({ name, id, imageUrl }: itemProps) {
 
   return (
     <div className="aspect-square relative">
-      <Hint label={name} side="left">
+      <Hint label={name} side="left" bgColor="black">
       <Image
         fill
         src={imageUrl}
         alt={name}
         onClick={onClick}
         className={cn(
-          "rounded-md cursor-pointer opacity-75 hover:opacity-100 transition",
+          "rounded-md cursor-pointer opacity-75 hover:opacity-100 transition-all",
           isActive && "opacity-100"
         )}
       />

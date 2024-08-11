@@ -11,7 +11,7 @@ function NewOrgButton() {
     <Dialog>
       <DialogTrigger asChild>
         <div className="aspect-square">
-          <Hint label="Create Organization" side="right" sideOffset={12}>
+          <Hint label="Create Organization" side="right" sideOffset={12} bgColor="black">
             <button className="w-full h-full rounded-lg bg-white/25 flex items-center justify-center opacity-60 hover:opacity-100 transition-all">
               <Plus />
             </button>

@@ -10,7 +10,7 @@ import { nanoid } from "nanoid";
 import Info from "./Info";
 import Participants from "./Participants";
 import Toolbar from "./Toolbar";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Camera,
   CanvasMode,
@@ -36,6 +36,8 @@ import { LayerPreview } from "./LayerPreview";
 import { SelectionBox } from "./SelectionBox";
 import { SelectionToolbar } from "./SelectionToolbar";
 import { Path } from "./Path";
+import { useDisableScrollBounce } from "@/hooks/UseDesableScrollBounce";
+import { DeleteLayer } from "@/hooks/useDeleteLayer";
 
 export const Canvas = ({ boardId }: { boardId: string }) => {
   const layerIds = useStorage((root) => root.layerIds);
@@ -47,9 +49,9 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
   const MAX_LAYERS = 100;
   const [camera, setCamera] = useState<Camera>({ x: 0, y: 0 });
   const [lastUsedColor, setLastUsedColor] = useState<Color>({
-    r: 120,
-    g: 255,
-    b: 255,
+    r: 0,
+    g: 0,
+    b: 0,
   });
 
   const onWheel = useCallback((e: React.WheelEvent) => {
@@ -59,6 +61,7 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     }));
   }, []);
 
+  useDisableScrollBounce();
   const history = useHistory();
   const canUndo = useCanUndo();
   const canRedo = useCanRedo();
@@ -176,7 +179,7 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
 
       const liveLayerIds = storage.get("layerIds");
       liveLayerIds.push(id);
-      setMyPresence({ pencilDraft: null }, { addToHistory: true });
+      setMyPresence({ pencilDraft: null });
       setCanvasState({ mode: CanvasMode.Pencil });
     },
     [lastUsedColor]
@@ -379,6 +382,27 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
     },
     [setCanvasState, history, camera, canvasState.mode]
   );
+  const deleteLayer = DeleteLayer();
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      switch (e.key) {
+        case "z": {
+          if (e.ctrlKey || e.metaKey) {
+            if (e.shiftKey) {
+              history.redo();
+            } else {
+              history.undo();
+            }
+            break;
+          }
+        }
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [deleteLayer, history]);
 
   return (
     <main className="w-full h-full relative bg-neutral-100 touch-none">
@@ -427,9 +451,9 @@ export const Canvas = ({ boardId }: { boardId: string }) => {
                 height={Math.abs(canvasState.origin.y - canvasState.current.y)}
               />
             )}
-          <CursorsPresence />  
+          <CursorsPresence />
           {/* for live drawing */}
-          {pencilDraft != null && pencilDraft.length > 0 && (     
+          {pencilDraft != null && pencilDraft.length > 0 && (
             <Path
               points={pencilDraft}
               fill={ColorToCss(lastUsedColor)}
