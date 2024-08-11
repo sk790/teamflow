@@ -19,6 +19,8 @@ export const BoardList = ({ orgId, query }: Props) => {
     search: query.search,
     favorite: query.favorite,
   });
+  console.log("data", data);
+  
 
   if (data === undefined) {
     return (
