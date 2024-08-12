@@ -13,7 +13,9 @@ interface Props {
   query: { search?: string; favorite?: string };
 }
 
-export const BoardList = ({ orgId, query }: Props) => {
+export const BoardList = ({ orgId, query }: Props) => {  
+  console.log({query});
+  
   const data = useQuery(api.boards.getBoards, {
     orgId,
     search: query.search,
