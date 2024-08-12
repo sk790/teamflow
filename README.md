@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🌟 **Live Team Collaboration Board --> TeamFlow** 🌟
+This project is a live collaboration platform that enables teams to work together in real time,
+regardless of their location. It allows multiple authenticated users to join a shared room, 
+where they can draw, add notes, and see each other's actions live on a shared canvas.
 
-## Getting Started
+🚀 Features
+**Real-Time Drawing Tools:**
+  - Includes tools like ellipses, rectangles, freehand drawing, and sticky notes to help visually express ideas.
+  
+- **Live Cursor Tracking:**
+  - See the cursor movements and drawing actions of other users in real time, making collaboration more intuitive.
 
-First, run the development server:
+- **Multi-User Collaboration:**
+  - Multiple users can join a room and collaborate securely, making it perfect for team meetings, brainstorming sessions, and workshops.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Board Management:**
+  - Create, update, favorite, and delete boards with ease, keeping your work organized and accessible.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Real-Time Updates:**
+  - Experience instant updates across the board as changes are made, ensuring everyone is on the same page without any delays.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Favorite Boards:**
+  - Mark important boards as favorites for quick access, helping teams keep track of ongoing projects or critical discussions.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Security & Authentication:**
+  - Integrated with Clerk for secure user authentication, ensuring that only authorized users can access specific rooms and boards.
 
-## Learn More
+- **Responsive & Intuitive UI:**
+  - Designed with Tailwind CSS and ShadCN UI library to create a clean, responsive, and intuitive user interface that works seamlessly across devices.
+ 
+    🛠️ Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- **[Next.js](https://nextjs.org/)**: Framework for server-rendered React applications.
+- **[React.js](https://reactjs.org/)**: JavaScript library for building user interfaces.
+- **[Clerk](https://clerk.dev/)**: Authentication and user management.
+- **[Convex](https://convex.dev/)**: Real-time database for instant data synchronization.
+- **[Liveblocks](https://liveblocks.io/)**: Real-time collaboration features like live cursors and synchronized state.
+- **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework for styling.
+- **[ShadCN UI](https://ui.shadcn.com/)**: Component library for creating clean and modern UI.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  📌 Project Links
+- **GitHub Repository:** [View the code](https://github.com/sk790/teamflow)
+- **Live Project:** [Check it out](https://teamflow-alpha.vercel.app/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  Feel free to explore the project and reach out if you have any questions or ideas for collaboration! 🌍
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
