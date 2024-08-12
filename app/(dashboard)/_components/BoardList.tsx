@@ -19,7 +19,10 @@ export const BoardList = ({ orgId, query }: Props) => {
     search: query.search,
     favorite: query.favorite,
   });
-  console.log("data", data);
+
+  console.log({ query });
+  
+  
   
 
   if (data === undefined) {
@@ -37,12 +40,12 @@ export const BoardList = ({ orgId, query }: Props) => {
       </div>
     );
   }
+  if (!data?.length) return <EmptyBoards />;
 
   if (!data?.length && query.search) return <EmptySearch />;
 
   if (!data?.length && query.favorite) return <EmptyFavorite />;
 
-  if (!data?.length) return <EmptyBoards />;
 
   return (
     <div>

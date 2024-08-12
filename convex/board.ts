@@ -2,7 +2,11 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 const images = [
-  "/search-not-found.svg", //add more images here later
+  "/search-not-found.svg",//add more images here later
+  "/bord-1.svg",
+  "/board-2.svg",
+  "/board-3.jpg"
+  
 ];
 export const create = mutation({
   args: {
@@ -16,7 +20,9 @@ export const create = mutation({
     }
 
     const randomImage = images[Math.floor(Math.random() * images.length)];
-
+    
+    
+    
     const board = await ctx.db.insert("boards", {
       orgId: args.orgId,
       title: args.title,
@@ -24,7 +30,7 @@ export const create = mutation({
       authorName: user.name!,
       imageUrl: randomImage,
     });
-
+    
     return board;
   },
 });
@@ -38,16 +44,18 @@ export const deleteBoard = mutation({
     if (!user) {
       throw new Error("Unauthorized");
     }
-
+    
     const existingFavorite = await ctx.db
-      .query("userFavorites")
-      .withIndex("by_user_board", (q) =>
+    .query("userFavorites")
+    .withIndex("by_user_board", (q) =>
         q.eq("userId", user.subject).eq("boardId", args.id)
       )
       .unique();
     if (existingFavorite) {
       await ctx.db.delete(existingFavorite._id);
     }
+    // const max = await ctx.db.query("boards").collect;
+    // console.log("max", max);
 
     await ctx.db.delete(args.id);
   },
@@ -63,7 +71,7 @@ export const updateBoard = mutation({
     if (!user) {
       throw new Error("Unauthorized");
     }
-    console.log(args.title, user);
+    // console.log(args.title, user);
 
     const title = args.title.trim();
     if (!title) {
